@@ -38,14 +38,34 @@ function Bookseat() {
       setdata(res.data);
       let info = res.data[0].seats;
       let date = searchParams.get("date");
-      let ans = info.filter((ele) => {
-        let x = ele.split("@");
-        if (x[0] == date) {
-          let z = x[1].split(",");
-          setbookedSeates([...z]);
-          return z;
+
+      const array = [];
+
+      for (let i = 0; i < info.length; i++) {
+        let seatInfo = info[i].split("@");
+        
+        // Check if the date matches
+        if (seatInfo[0] === date) {
+          let bookedSeats = seatInfo[1].split(",");
+          
+          // Add booked seats to the selectedSeats array
+          array.push(...bookedSeats);
         }
-      });
+      }
+
+      setbookedSeates(array);
+
+
+      // let ans = info.filter((ele) => {
+      //   let x = ele.split("@");
+      //   if (x[0] == date) {    1 
+      //     let z = x[1].split(",");
+      //     setbookedSeates([...z]);
+      //     return z;
+      //   }
+      // });
+
+
       // console.log("ans", ans);
       // console.log("bookedSeats", bookedSeates);
       setwentwrong(false);
